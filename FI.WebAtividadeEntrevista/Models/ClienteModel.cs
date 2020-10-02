@@ -70,7 +70,8 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// Telefone
         /// </summary>
-        //[RegularExpression(@"/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/", ErrorMessage = "Digite um cpf válido")]
+        [Required(ErrorMessage = "CPF obrigatório")]
+        [CustomValidation.CustomValidationCPF(ErrorMessage = "CPF inválido")]
         public string CPF { get; set; }
 
     }    
