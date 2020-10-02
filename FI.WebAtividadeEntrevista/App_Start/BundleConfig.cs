@@ -33,6 +33,9 @@ namespace WebAtividadeEntrevista
             bundles.Add(new ScriptBundle("~/bundles/altClientes").Include(
                       "~/Scripts/Clientes/FI.AltClientes.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/urlBeneficiarioList").Include(
+                      "~/Scripts/Beneficiarios/FI.ListBeneficiarios.js"));
+            
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

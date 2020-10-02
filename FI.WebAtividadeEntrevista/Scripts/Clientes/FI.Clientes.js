@@ -38,6 +38,10 @@ $(document).ready(function () {
     
 })
 
+$("#beneficiarios").click(function () {
+    ModalDialog('Beneficiarios', 'data')
+});
+
 function ModalDialog(titulo, texto) {
     var random = Math.random().toString().replace('.', '');
     var texto = '<div id="' + random + '" class="modal fade">                                                               ' +

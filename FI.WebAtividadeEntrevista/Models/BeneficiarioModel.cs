@@ -16,7 +16,8 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// CPF
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "CPF obrigatório")]
+        [CustomValidation.CustomValidationCPF(ErrorMessage = "CPF inválido")]
         public string CPF { get; set; }
 
         /// <summary>

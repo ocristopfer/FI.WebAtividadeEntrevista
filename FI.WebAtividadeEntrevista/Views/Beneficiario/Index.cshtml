@@ -1,0 +1,39 @@
+﻿@model WebAtividadeEntrevista.Models.BeneficiarioModel
+
+@{
+    ViewBag.Title = "Beneficiarios";
+}
+@section scripts{
+    <script>
+        var urlAlteracao = '@Url.Action("Alterar", "Beneficiario", new { area = "" })';
+        var urlExclusao =   '@Url.Action("Excluir", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Beneficiario", new { area = "" })';
+
+    </script>
+    @Scripts.Render("~/bundles/urlBeneficiarioList")
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="CPF">CPF:</label>
+            <input required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="Nome">Nome:</label>
+            <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="pull-right">
+            <button type="submit" class="btn btn-sm btn-success">Incluir</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <table id="gridBeneficiarios" class="table"></table>
+</div>

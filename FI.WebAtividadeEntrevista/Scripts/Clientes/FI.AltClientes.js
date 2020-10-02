@@ -1,7 +1,7 @@
 ﻿
 $(document).ready(function () {
-    $("#formCadastro #CPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true  });
-    $("#formCadastro #CEP").inputmask("mask", { "mask": "99999-999" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true } );
+    $("#formCadastro #CPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
+    $("#formCadastro #CEP").inputmask("mask", { "mask": "99999-999" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
     $("#formCadastro #Telefone").inputmask("mask", { "mask": "(99) 9999-99999" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
 
     if (obj) {
@@ -44,18 +44,28 @@ $(document).ready(function () {
                 },
             success:
                 function (r) {
-                    ModalDialog("Sucesso!", r)
-                    $("#formCadastro")[0].reset();
-                    window.location.href = urlRetorno;
-                   
-                
+                    ModalDialog("Sucesso!", r, redirecionar);
+                 
             }
         });
     })
     
 })
 
-function ModalDialog(titulo, texto) {
+function redirecionar(id) {
+    $("#" + id).on("hidden", function () {
+        console.log('escondeu')
+        $("#formCadastro")[0].reset();
+        window.location.href = urlRetorno;
+    });
+
+}
+
+$("#beneficiarios").click(function () {
+    ModalDialog('Beneficiarios', 'data')
+});
+
+function ModalDialog(titulo, texto, callback) {
     var random = Math.random().toString().replace('.', '');
     var texto = '<div id="' + random + '" class="modal fade">                                                               ' +
         '        <div class="modal-dialog">                                                                                 ' +
@@ -77,4 +87,5 @@ function ModalDialog(titulo, texto) {
 
     $('body').append(texto);
     $('#' + random).modal('show');
+    callback(random);
 }
