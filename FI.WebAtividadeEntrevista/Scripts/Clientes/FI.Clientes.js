@@ -30,47 +30,24 @@ $(document).ready(function () {
             },
             success:
                 function (r) {
-                console.log(r)
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();
+                    ModalDialog("Sucesso!", r, null , $("#formCadastro")[0].reset());
+              
             }
         });
     })
     
 })
 
-$("#beneficiarios").click(function () {
-    getBeneficiarios(urlBeneficiario, listBeneficiarios, null, ModalDialog);
-});
+function prencherEndereco(dados_cep) {
+    if (dados_cep) {
+        $("#formCadastro #Estado").val(dados_cep.uf),
+        $("#formCadastro #Cidade").val(dados_cep.localidade),
+        $("#formCadastro #Logradouro").val(dados_cep.logradouro)
+    }
 
-$("#Beneficiario_Incluir").click(function () {
-    console.log('sera')
-    Aler('uhul')
-    //getBeneficiarios(urlBeneficiario, listBeneficiario, obj.Id, ModalDialog);
-
-});
-
-function ModalDialog(titulo, texto) {
-    var random = Math.random().toString().replace('.', '');
-    var texto = '<div id="' + random + '" class="modal fade">                                                               ' +
-        '        <div class="modal-dialog">                                                                                 ' +
-        '            <div class="modal-content">                                                                            ' +
-        '                <div class="modal-header">                                                                         ' +
-        '                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>         ' +
-        '                    <h4 class="modal-title">' + titulo + '</h4>                                                    ' +
-        '                </div>                                                                                             ' +
-        '                <div class="modal-body">                                                                           ' +
-        '                    <p>' + texto + '</p>                                                                           ' +
-        '                </div>                                                                                             ' +
-        '                <div class="modal-footer">                                                                         ' +
-        '                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>             ' +
-        '                                                                                                                   ' +
-        '                </div>                                                                                             ' +
-        '            </div><!-- /.modal-content -->                                                                         ' +
-        '  </div><!-- /.modal-dialog -->                                                                                    ' +
-        '</div> <!-- /.modal -->                                                                                        ';
-
-    $('body').append(texto);
-    $('#' + random).modal('show');
 }
+
+$("#beneficiarios").click(function () {
+    getBeneficiariosModal(urlBeneficiario, listBeneficiarios, null, ModalDialog);
+});
 

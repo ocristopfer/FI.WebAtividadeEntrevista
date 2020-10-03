@@ -7,11 +7,15 @@
         var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
         var urlBeneficiario = '@Url.Action("Index", "Beneficiario", new { area = "" })';
         var urlBeneficiarioList = '@Url.Action("BeneficiarioListSemPaginacao", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioValidarCFP = '@Url.Action("VerificarCPF", "Beneficiario", new { area = "" })';
         var listBeneficiarios = @Html.Raw(Json.Encode(new List<WebAtividadeEntrevista.Models.BeneficiarioModel>()));
 
     </script>
+
     @Scripts.Render("~/bundles/clientes")
-    @Scripts.Render("~/bundles/urlBeneficiarioList")
+    @Scripts.Render("~/bundles/modalDialog")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/bundles/beneficiarioModal")
 
 
 }

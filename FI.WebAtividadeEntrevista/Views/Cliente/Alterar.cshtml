@@ -13,9 +13,12 @@
         var urlBeneficiarioValidarCFP = '@Url.Action("VerificarCPF", "Beneficiario", new { area = "" })';
         var listBeneficiarios = @Html.Raw(Json.Encode(new List<WebAtividadeEntrevista.Models.BeneficiarioModel>()));
 
+
     </script>
     @Scripts.Render("~/bundles/altClientes")
-    @Scripts.Render("~/bundles/urlBeneficiarioList");
+    @Scripts.Render("~/bundles/modalDialog")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/bundles/beneficiarioModal")
 
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>

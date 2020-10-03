@@ -1,8 +1,10 @@
 ﻿@model WebAtividadeEntrevista.Models.BeneficiarioModel
-
 @{
     Layout = null;
     ViewBag.Title = "Beneficiarios";
+}
+@section scripts{
+    @Scripts.Render("~/bundles/urlBeneficiarioList");
 }
 
 <!--
@@ -28,8 +30,8 @@
         </div>
     </div>
     <div class="col-md-2 justify-content-center">
-        <div>
-            <button type="button" id="Beneficiario_Incluir" class="btn btn-success align-middle">Incluir</button>
+        <div style="padding-top: 25px">
+            <button id="beneficiarioIncluir" type="button" class="btn btn-success" >Incluir</button>
         </div>
     </div>
 </div>
@@ -39,9 +41,18 @@
             <tr>
                 <th>CPF</th>
                 <th>Nome</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <th width="200">15089846707</th>
+                <th width="200">Fulano</th>
+                <th>
+                    <button href="#" role="button" type="button" id="beneficiarioIncluir" OnClick="incluirBeneficiario" class="btn btn-success align-middle">Editar</button>
+                    <button href="#" role="button" type="button" id="beneficiarioIncluir" OnClick="incluirBeneficiario" class="btn btn-success align-middle">Editar</button>
+                </th>
+            </tr>
         <tbody>
     </table>
 </div>

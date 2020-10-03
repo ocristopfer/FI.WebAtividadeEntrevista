@@ -1,6 +1,5 @@
 ﻿
 <form id="formCadastro" method="post">
-
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -34,7 +33,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="CEP">CEP:</label>
-                <input required="required" type="text" class="form-control" id="CEP" name="CEP" placeholder="Ex.: 01011-100" maxlength="9">
+                <input required="required" type="text" class="form-control" id="CEP" name="CEP" onfocusout="buscarCep(this.value, prencherEndereco)" placeholder="Ex.: 01011-100" maxlength="9">
             </div>
         </div>
         <div class="col-md-4">
@@ -42,8 +41,6 @@
                 <label for="Estado">Estado:</label>
                 <select required="required" id="Estado" class="form-control" name="Estado">
                     <option value="">Selecione</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="PE">Pernambuco</option>
                 </select>
             </div>
         </div>
@@ -93,8 +90,4 @@
         </div>
     </div>
     
-
 </form>
-
-
-

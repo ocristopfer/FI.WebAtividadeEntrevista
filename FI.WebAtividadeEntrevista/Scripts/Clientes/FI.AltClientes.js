@@ -45,9 +45,8 @@ $(document).ready(function () {
             success:
                 function (r) {
                     console.log(r)
-                    ModalDialog("Sucesso!", r, redirecionar);
-                    $("#formCadastro")[0].reset();
-                    window.location.href = urlRetorno;
+                    ModalDialog("Sucesso!", r, null ,reset);
+                 
 
                 }
         });
@@ -55,33 +54,23 @@ $(document).ready(function () {
 
 })
 
+function reset() {
+    $("#formCadastro")[0].reset();
+    window.location.href = urlRetorno;
+}
 
-$("#beneficiarios").click(function () {
-    getBeneficiarios(urlBeneficiario, listBeneficiarios, obj.Id, ModalDialog);
-
-});
-
-function ModalDialog(titulo, texto) {
-    var random = Math.random().toString().replace('.', '');
-    var texto = '<div id="' + random + '" class="modal fade">                                                               ' +
-        '        <div class="modal-dialog">                                                                                 ' +
-        '            <div class="modal-content">                                                                            ' +
-        '                <div class="modal-header">                                                                         ' +
-        '                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>         ' +
-        '                    <h4 class="modal-title">' + titulo + '</h4>                                                    ' +
-        '                </div>                                                                                             ' +
-        '                <div class="modal-body">                                                                           ' +
-        '                    <p>' + texto + '</p>                                                                           ' +
-        '                </div>                                                                                             ' +
-        '                <div class="modal-footer">                                                                         ' +
-        '                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>             ' +
-        '                                                                                                                   ' +
-        '                </div>                                                                                             ' +
-        '            </div><!-- /.modal-content -->                                                                         ' +
-        '  </div><!-- /.modal-dialog -->                                                                                    ' +
-        '</div> <!-- /.modal -->                                                                                        ';
-
-    $('body').append(texto);
-    $('#' + random).modal('show');
+function prencherEndereco(dados_cep) {
+    if (dados_cep) {
+        $("#formCadastro #Estado").val(dados_cep.uf),
+        $("#formCadastro #Cidade").val(dados_cep.localidade),
+        $("#formCadastro #Logradouro").val(dados_cep.logradouro)
+    }
 
 }
+
+$("#beneficiarios").click(function () {
+    getBeneficiariosModal(urlBeneficiario, listBeneficiarios, obj.Id, ModalDialog);
+});
+
+
+

@@ -11,13 +11,13 @@ namespace WebAtividadeEntrevista.Controllers
 {
     public class BeneficiarioController : Controller
     {
+
         public ActionResult Index()
         {
-            return PartialView();
-            //return View();
+            return View();
         }
-
-
+        
+     
         public ActionResult Incluir()
         {
             return View();
