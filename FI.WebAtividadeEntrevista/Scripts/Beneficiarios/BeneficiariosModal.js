@@ -6,10 +6,10 @@ $(document).ready(function () {
 
 
 $("body").on("click", "#beneficiarioIncluir", function () {
-    
+
     var find = listBeneficiarios.find(x => x.CPF === $('#Beneficiario_CPF').inputmask("unmaskedvalue"))
     if (find) {
-        ModalDialog("Ocorreu um erro", "Beneficiário detentor do CPF: " + $('#Beneficiario_CPF').val() +  " já existe na lista.");
+        ModalDialog("Ocorreu um erro", "Beneficiário detentor do CPF: " + $('#Beneficiario_CPF').val() + " já existe na lista.");
         return;
     }
 
@@ -31,7 +31,6 @@ $("body").on("click", "#beneficiarioIncluir", function () {
             },
         success:
             function (r) {
-                console.log(r)
                 if (r) {
 
                     beneficiario = {
@@ -41,7 +40,7 @@ $("body").on("click", "#beneficiarioIncluir", function () {
                         idCliente: _idCliente
                     }
                     listBeneficiarios.push(beneficiario);
-                    adicionarALista(beneficiario); 
+                    adicionarALista(beneficiario);
                 }
             }
     });
@@ -56,29 +55,8 @@ $("body").on("click", ".beneficiarioExcluir", function () {
             }
         });
         $(this).closest("tr").remove();
-     
 
-        /*listBeneficiarios = listBeneficiarios.filter(item => item.Id !== this.value)
-        $.ajax({
-            url: urlBeneficiarioExcluir,
-            method: "POST",
-            data: {
-                id: this.value,
-            },
-            error:
-                function (r) {
 
-                    if (r.status == 400)
-                        ModalDialog("Ocorreu um erro", r.responseJSON);
-                    else if (r.status == 500)
-                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-                },
-            success:
-                function (r) {
-                    console.log('remove')
-                    elemento.remove();
-                }
-        });*/
     } else {
         console.log($(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''));
         listBeneficiarios = listBeneficiarios.filter(item => item.CPF !== $(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''))
@@ -87,23 +65,74 @@ $("body").on("click", ".beneficiarioExcluir", function () {
 
 });
 
-$("body").on("click", "#beneficiarioEditar", function () {
-    'TODO'
-    console.log('editar')
-    console.log(this.value)
+var elementoHtml = null;
+var id;
+var cpf;
+var nome;
+
+$("body").on("click", ".beneficiarioSalvar", function () {
+    var find = listBeneficiarios.find(x => x.CPF === cpf)
+    if (find & find.Id != id) {
+        ModalDialog("Ocorreu um erro", "Beneficiário detentor do CPF: " + cpf + " já existe na lista.");
+        return;
+    }
+
+    cpf = $('#edicaoCPF').val();
+    nome = $('#edicaoNome').val();
+
+    $(this).closest('tr').children('td:eq(1)').html()
+    $(this).closest('tr').children('td:eq(2)').html()
+    $(this).closest('tr').children('td:eq(1)').text(cpf)
+    $(this).closest('tr').children('td:eq(2)').text(nome)
+
+    listBeneficiarios.forEach(element => {
+        if (element.Id === parseInt(id)) {
+            element.CPF = cpf;
+            element.Nome = nome;
+        }
+    });
+
+    
+    id = null;
+    cpf = null;
+    nome = null;
+
+    elementoHtml.children('td:eq(3)').children('.beneficiarioSalvar').hide();
+    elementoHtml.children('td:eq(3)').children('.beneficiarioEditar').show();
+    
 });
+
+
+$("body").on("click", ".beneficiarioEditar", function () {
+    elementoHtml = $(this).closest('tr');
+    
+    $(this).closest('tr').children('td:eq(3)').children('.beneficiarioEditar').hide()
+    $(this).closest('tr').children('td:eq(3)').children('.beneficiarioSalvar').show()
+     id = $(this).closest('tr').children('td:eq(0)');
+     cpf = $(this).closest('tr').children('td:eq(1)').text().replace(/\D/g, '').trim();
+     nome = $(this).closest('tr').children('td:eq(2)').text().trim();
+
+    $(this).closest('tr').children('td:eq(1)').html('<input id="edicaoCPF" type="text" class="form-control" value="' + cpf + '" maxlength="14"> </input>')
+    $(this).closest('tr').children('td:eq(2)').html('<input id="edicaoNome" type="text" class="form-control" value="' + nome + '" maxlength="50"> </input>')
+    $("#modalBeneficiarios #edicaoCPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
+  /*  $('.beneficiarioEditar').hide();
+    $('.beneficiarioSalvar').show();
+    */
+});
+
+
 
 function salvarBeneficario(lista, callbackFuction, callBackParametro) {
     var url;
     lista.forEach(element => {
-        
+
         if (element.Id == null) {
             element.Id = 0;
             url = urlBeneficiarioIncluir;
         } else {
             url = urlBeneficiarioAlterar;
         }
-     
+
         $.ajax({
             url: url,
             method: "POST",
@@ -128,7 +157,7 @@ function salvarBeneficario(lista, callbackFuction, callBackParametro) {
                     }
                 }
         });
-        
+
 
     });
 }
@@ -140,6 +169,7 @@ function adicionarALista(beneficiario) {
         '<td width="200">' + beneficiario.Nome + '</td >                                                ' +
         '<td>                                                                                           ' +
         '   <button id="" type="button" class="btn btn-primary beneficiarioEditar">Editar</button>      ' +
+        '   <button id="" type="button" class="btn btn-primary beneficiarioSalvar" style="display:none>Salvar</button>      ' +
         '   <button id="" type="button" class="btn btn-primary beneficiarioExcluir">Excluir</button>    ' +
         '</td>                                                                                          ' +
         '            </tr >                                                                             ';
@@ -165,13 +195,19 @@ function getBeneficiariosModal(urlBeneficiario, listBeneficiarios, idCliente, Mo
             },
         success:
             function (r) {
-                ModalDialog('Beneficiario', r, 'modalBeneficiarios', null, callBack);
+                ModalDialog('Beneficiario', r, 'modalBeneficiarios', closeModalFunction, reaplicarMascara);
             }
     });
 
 }
 
-function callBack() {
+function closeModalFunction() {
+    if (elementoHtml != null) {
+
+    }
+}
+
+function reaplicarMascara() {
     $("#modalBeneficiarios .mascaraCPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
 }
 

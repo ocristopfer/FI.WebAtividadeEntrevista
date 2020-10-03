@@ -32,9 +32,9 @@
     }
 
     if (closeFunction != null) {
-        $('#' + random).on('hidden.bs.modal', function () {
+        $('#' + random).on('hidden.bs.modal', function (e) {
             closeFunction();
-        });
+         });
     }
     
 }

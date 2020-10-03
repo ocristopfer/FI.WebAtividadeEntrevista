@@ -40,6 +40,7 @@
         @foreach (var item in Model)
         {
             <tr id="beneficiario_@Html.DisplayFor(modelItem => item.Id)">
+                <td style="display:none" id="@Html.DisplayFor(modelItem => item.Id)" value="@Html.DisplayFor(modelItem => item.Id)"></td>
                 <td width="200" class="mascaraCPF">
                     @Html.DisplayFor(modelItem => item.CPF)
                 </td>
@@ -49,6 +50,7 @@
 
                 <td>
                     <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioEditar">Editar</button>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioSalvar" style="display:none">Salvar</button>
                     <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioExcluir">Excluir</button>
                 </td>
             </tr>
