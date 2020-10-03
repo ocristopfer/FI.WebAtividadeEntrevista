@@ -27,6 +27,10 @@ namespace FI.AtividadeEntrevista.DML
         /// idCliente
         /// </summary>
         public long idCliente { get; set; }
-
+        
+        /// <summary>
+        /// Data de Exclusão
+        /// </summary>
+        public Nullable<DateTime> DtExclusao { get; set; }
     }
 }

@@ -48,11 +48,12 @@ namespace FI.AtividadeEntrevista.DAL
             return cli.FirstOrDefault();
         }
 
-        internal bool VerificarExistencia(string CPF)
+        internal bool VerificarExistencia(string CPF, long idCliente)
         {
             List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
 
             parametros.Add(new System.Data.SqlClient.SqlParameter("CPF", CPF));
+            parametros.Add(new System.Data.SqlClient.SqlParameter("idCliente", idCliente));
 
             DataSet ds = base.Consultar("FI_SP_VerificaBeneficiario", parametros);
 
@@ -106,9 +107,9 @@ namespace FI.AtividadeEntrevista.DAL
             List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
             parametros.Add(new System.Data.SqlClient.SqlParameter("Nome", Beneficiario.Nome));
             parametros.Add(new System.Data.SqlClient.SqlParameter("CPF", Beneficiario.CPF));
-            parametros.Add(new System.Data.SqlClient.SqlParameter("IDCLIENTE", Beneficiario.idCliente));
-
-            base.Executar("FI_SP_IncBenef", parametros);
+            parametros.Add(new System.Data.SqlClient.SqlParameter("DTEXCLUSAO", Beneficiario.DtExclusao));
+            parametros.Add(new System.Data.SqlClient.SqlParameter("ID", Beneficiario.Id));
+            base.Executar("FI_SP_AltBenef", parametros);
         }
 
 
@@ -137,6 +138,7 @@ namespace FI.AtividadeEntrevista.DAL
                     bene.CPF = row.Field<string>("CPF");
                     bene.Nome = row.Field<string>("NOME");
                     bene.idCliente = row.Field<long>("IDCLIENTE");
+                    bene.DtExclusao = row.Field<DateTime?>("DTEXCLUSAO");
                     lista.Add(bene);
                 }
             }

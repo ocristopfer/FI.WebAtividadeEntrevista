@@ -30,7 +30,7 @@ $(document).ready(function () {
             },
             success:
                 function (r) {
-                    salvarBeneficario(listBeneficiarios, callbackSucesso(r));  
+                    salvarBeneficario(listBeneficiarios, callbackSucesso, parametro);  
             }
         });
     })

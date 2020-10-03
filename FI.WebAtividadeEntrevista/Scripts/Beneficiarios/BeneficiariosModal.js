@@ -1,48 +1,18 @@
 ﻿
 $(document).ready(function () {
+    var _idCliente;
     console.log('bene', listBeneficiarios)
 })
 
 
-$("body").on("click", ".beneficiarioExcluir", function () {
-    var elemento = $(this).closest("tr")
-    if (this.value) {
-        listBeneficiarios = listBeneficiarios.filter(item => item.Id !== this.value)
-        $.ajax({
-            url: urlBeneficiarioExcluir,
-            method: "POST",
-            data: {
-                id: this.value,
-            },
-            error:
-                function (r) {
-
-                    if (r.status == 400)
-                        ModalDialog("Ocorreu um erro", r.responseJSON);
-                    else if (r.status == 500)
-                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-                },
-            success:
-                function (r) {
-                    console.log('remove')
-                    elemento.remove();
-                }
-        });
-    } else {
-        console.log($(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''));
-        listBeneficiarios = listBeneficiarios.filter(item => item.CPF !== $(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''))
-        $(this).closest("tr").remove();
-    }
-    
-});
-
-$("body").on("click", "#beneficiarioEditar", function () {
-    console.log('editar')
-    console.log(this.value)
-});
-
 $("body").on("click", "#beneficiarioIncluir", function () {
-    console.log(listBeneficiarios)
+    
+    var find = listBeneficiarios.find(x => x.CPF === $('#Beneficiario_CPF').inputmask("unmaskedvalue"))
+    if (find) {
+        ModalDialog("Ocorreu um erro", "Beneficiário detentor do CPF: " + $('#Beneficiario_CPF').val() +  " já existe na lista.");
+        return;
+    }
+
     $.ajax({
         url: urlBeneficiarioValidar,
         method: "POST",
@@ -70,56 +40,95 @@ $("body").on("click", "#beneficiarioIncluir", function () {
                         Nome: $('#Beneficiario_Nome').val(),
                         idCliente: _idCliente
                     }
-
-                    var find = listBeneficiarios.find(x => x.CPF === beneficiario.CPF)
-
-                    console.log(find)
-                    if (find) {
-                        ModalDialog("Ocorreu um erro", "Beneficiário já foi incluido a lista.");
-                    } else {
-                        listBeneficiarios.push(beneficiario);
-                        adicionarALista(beneficiario);
-                    }
-                           
-
+                    listBeneficiarios.push(beneficiario);
+                    adicionarALista(beneficiario); 
                 }
-                //ModalDialog('Beneficiario', r, 'modalBeneficiarios', null, getBeneficiarios(_idCliente, listBeneficiarios));
             }
     });
 });
 
 
+$("body").on("click", ".beneficiarioExcluir", function () {
+    if (this.value) {
+        listBeneficiarios.forEach(element => {
+            if (element.Id === parseInt(this.value)) {
+                element.dtExclusao = new Date().toJSON();
+            }
+        });
+        $(this).closest("tr").remove();
+     
 
-function salvarBeneficario(lista, callbackFuction) {
-    lista.forEach(element => {
-        console.log(element);
-        if (element.Id == null) {
+        /*listBeneficiarios = listBeneficiarios.filter(item => item.Id !== this.value)
+        $.ajax({
+            url: urlBeneficiarioExcluir,
+            method: "POST",
+            data: {
+                id: this.value,
+            },
+            error:
+                function (r) {
 
-            $.ajax({
-                url: urlBeneficiarioIncluir,
-                method: "POST",
-                data: {
-                    idCliente: element.idCliente,
-                    Nome: element.Nome,
-                    CPF: element.CPF
+                    if (r.status == 400)
+                        ModalDialog("Ocorreu um erro", r.responseJSON);
+                    else if (r.status == 500)
+                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
                 },
-                error:
-                    function (r) {
-                        if (r.status == 400)
-                            ModalDialog("Ocorreu um erro", r.responseJSON);
-                        else if (r.status == 500)
-                            ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-                    },
-                success:
-                    function (r) {
-                        if (callbackFuction) {
-                            callbackFuction();
-                        }
-                        
-                        // ModalDialog("Sucesso!", r, null);
-                    }
-            });
+            success:
+                function (r) {
+                    console.log('remove')
+                    elemento.remove();
+                }
+        });*/
+    } else {
+        console.log($(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''));
+        listBeneficiarios = listBeneficiarios.filter(item => item.CPF !== $(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''))
+        $(this).closest("tr").remove();
+    }
+
+});
+
+$("body").on("click", "#beneficiarioEditar", function () {
+    'TODO'
+    console.log('editar')
+    console.log(this.value)
+});
+
+function salvarBeneficario(lista, callbackFuction, callBackParametro) {
+    var url;
+    lista.forEach(element => {
+        
+        if (element.Id == null) {
+            element.Id = 0;
+            url = urlBeneficiarioIncluir;
+        } else {
+            url = urlBeneficiarioAlterar;
         }
+     
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: {
+                Id: element.Id,
+                Nome: element.Nome,
+                CPF: element.CPF,
+                idCliente: element.idCliente,
+                dtExclusao: element.dtExclusao
+            },
+            error:
+                function (r) {
+                    if (r.status == 400)
+                        ModalDialog("Ocorreu um erro", r.responseJSON);
+                    else if (r.status == 500)
+                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+                },
+            success:
+                function (r) {
+                    if (callbackFuction) {
+                        callbackFuction(callBackParametro);
+                    }
+                }
+        });
+        
 
     });
 }
@@ -130,19 +139,18 @@ function adicionarALista(beneficiario) {
         '<td width="200" class="mascaraCPF">' + $('#Beneficiario_CPF').val() + '</td >                  ' +
         '<td width="200">' + beneficiario.Nome + '</td >                                                ' +
         '<td>                                                                                           ' +
-        '   <button id="" type="button" class="btn btn-primary beneficiarioEditar">Editar</button>     ' +
-        '   <button id="" type="button" class="btn btn-primary beneficiarioExcluir">Excluir</button>   ' +
+        '   <button id="" type="button" class="btn btn-primary beneficiarioEditar">Editar</button>      ' +
+        '   <button id="" type="button" class="btn btn-primary beneficiarioExcluir">Excluir</button>    ' +
         '</td>                                                                                          ' +
         '            </tr >                                                                             ';
+
     $('#gridBeneficiarios > tbody:last-child').append(texto);
-       console.log(listBeneficiarios)
+
 }
 
 function getBeneficiariosModal(urlBeneficiario, listBeneficiarios, idCliente, ModalFunction) {
-    _idCliente = idCliente;
-    _listBeneficiarios = listBeneficiarios;
-
-   $.ajax({
+    _idCliente = idCliente
+    $.ajax({
         url: urlBeneficiario,
         method: "POST",
         data: {
@@ -160,20 +168,14 @@ function getBeneficiariosModal(urlBeneficiario, listBeneficiarios, idCliente, Mo
                 ModalDialog('Beneficiario', r, 'modalBeneficiarios', null, callBack);
             }
     });
-    
- 
-
 
 }
+
 function callBack() {
     $("#modalBeneficiarios .mascaraCPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
-    console.log(_idCliente, listBeneficiarios);
-    // getBeneficiarios(_idCliente, _listBeneficiarios)
 }
 
 function getBeneficiarios(idCliente, listBeneficiarios) {
-
-    console.log(idCliente);
     if (idCliente) {
         $.ajax({
             url: urlBeneficiarioList + '?idCliente=' + idCliente,

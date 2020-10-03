@@ -32,7 +32,10 @@ namespace WebAtividadeEntrevista.Models
         [Required]
         public long idCliente { get; set; }
 
-
+        /// <summary>
+        /// Data de Exclusão
+        /// </summary>
+        public Nullable<DateTime> DtExclusao { get; set; }
 
     }    
 }

@@ -61,7 +61,7 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                if (bo.VerificarExistencia(model.CPF))
+                if (bo.VerificarExistencia(model.CPF, model.idCliente))
                 {
                     Response.StatusCode = 400;
                     return Json(string.Join(Environment.NewLine, "CPF já cadastrado na base de dados!"));
@@ -98,7 +98,7 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                if (bo.VerificarExistencia(model.CPF))
+                if (bo.VerificarExistencia(model.CPF, model.idCliente))
                 {
                     Response.StatusCode = 400;
                     return Json(string.Join(Environment.NewLine, "CPF já cadastrado na base de dados!"));
@@ -131,7 +131,9 @@ namespace WebAtividadeEntrevista.Controllers
                 {
                     Id = model.Id,
                     Nome = model.Nome,
-                    CPF = model.CPF
+                    CPF = model.CPF,
+                    DtExclusao = model.DtExclusao
+                    
                 });
 
                 return Json("Cadastro alterado com sucesso");
@@ -171,7 +173,7 @@ namespace WebAtividadeEntrevista.Controllers
                 bo.Excluir(id);
                 return Json("true");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return Json("false");
             }
