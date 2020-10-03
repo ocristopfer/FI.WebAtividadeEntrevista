@@ -13,7 +13,8 @@ namespace WebAtividadeEntrevista.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return PartialView();
+            //return View();
         }
 
 
@@ -112,7 +113,23 @@ namespace WebAtividadeEntrevista.Controllers
             return View(model);
         }
 
-       
+        [HttpPost]
+        public JsonResult BeneficiarioListSemPaginacao(long idCliente)
+        {
+            try
+            {
+                int qtd = 0;
+                List<Beneficiario> clientes = new BoBeneficiario().Pesquisa(idCliente, 0, 0, "Nome",true, out qtd);
+
+                //Return result to jTable
+                return Json(new { Result = "OK", Records = clientes, TotalRecordCount = qtd });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
         [HttpPost]
         public JsonResult BeneficiarioList(long idCliente, int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
         {

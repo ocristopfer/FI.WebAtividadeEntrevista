@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
-        
+
         $.ajax({
             url: urlPost,
             method: "POST",
@@ -44,28 +44,24 @@ $(document).ready(function () {
                 },
             success:
                 function (r) {
+                    console.log(r)
                     ModalDialog("Sucesso!", r, redirecionar);
-                 
-            }
+                    $("#formCadastro")[0].reset();
+                    window.location.href = urlRetorno;
+
+                }
         });
     })
-    
+
 })
 
-function redirecionar(id) {
-    $("#" + id).on("hidden", function () {
-        console.log('escondeu')
-        $("#formCadastro")[0].reset();
-        window.location.href = urlRetorno;
-    });
-
-}
 
 $("#beneficiarios").click(function () {
-    ModalDialog('Beneficiarios', 'data')
+    getBeneficiarios(urlBeneficiario, listBeneficiarios, obj.Id, ModalDialog);
+
 });
 
-function ModalDialog(titulo, texto, callback) {
+function ModalDialog(titulo, texto) {
     var random = Math.random().toString().replace('.', '');
     var texto = '<div id="' + random + '" class="modal fade">                                                               ' +
         '        <div class="modal-dialog">                                                                                 ' +
@@ -87,5 +83,5 @@ function ModalDialog(titulo, texto, callback) {
 
     $('body').append(texto);
     $('#' + random).modal('show');
-    callback(random);
+
 }

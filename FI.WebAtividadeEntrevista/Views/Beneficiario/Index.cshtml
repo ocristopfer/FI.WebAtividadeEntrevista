@@ -1,39 +1,54 @@
 ﻿@model WebAtividadeEntrevista.Models.BeneficiarioModel
 
 @{
+    Layout = null;
     ViewBag.Title = "Beneficiarios";
 }
-@section scripts{
-    <script>
-        var urlAlteracao = '@Url.Action("Alterar", "Beneficiario", new { area = "" })';
-        var urlExclusao =   '@Url.Action("Excluir", "Beneficiario", new { area = "" })';
-        var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Beneficiario", new { area = "" })';
 
-    </script>
-    @Scripts.Render("~/bundles/urlBeneficiarioList")
-}
-
+<!--
+<div id="modalaaa" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Benefeciários</h4>
+            </div>
+            <div class="modal-body">-->
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
-            <label for="CPF">CPF:</label>
-            <input required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
+            <label for="Beneficiario_CPF">CPF:</label>
+            <input required="required" type="text" class="form-control" id="Beneficiario_CPF" name="Beneficiario_CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
-            <label for="Nome">Nome:</label>
-            <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
+            <label for="Beneficiario_Nome">Nome:</label>
+            <input required="required" type="text" class="form-control" id="Beneficiario_Nome" name="Beneficiario_Nome" placeholder="Ex.: João" maxlength="50">
         </div>
     </div>
-    <div class="col-md">
-        <div class="pull-right">
-            <button type="submit" class="btn btn-sm btn-success">Incluir</button>
+    <div class="col-md-2 justify-content-center">
+        <div>
+            <button type="button" id="Beneficiario_Incluir" class="btn btn-success align-middle">Incluir</button>
         </div>
     </div>
-
 </div>
-
 <div class="row">
-    <table id="gridBeneficiarios" class="table"></table>
+    <table id="gridBeneficiarios" class="table">
+        <thead>
+            <tr>
+                <th>CPF</th>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tbody>
+    </table>
 </div>
+<!--           </div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+</div>
+        </div>
+    </div>
+</div>-->

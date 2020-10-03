@@ -8,8 +8,15 @@
         var obj = @Html.Raw(Json.Encode(Model));
         var urlRetorno = '@Url.Action("Index", "Cliente", new { area = "" })';
 
+        var urlBeneficiario = '@Url.Action("Index", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioList = '@Url.Action("BeneficiarioListSemPaginacao", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioValidarCFP = '@Url.Action("VerificarCPF", "Beneficiario", new { area = "" })';
+        var listBeneficiarios = @Html.Raw(Json.Encode(new List<WebAtividadeEntrevista.Models.BeneficiarioModel>()));
+
     </script>
     @Scripts.Render("~/bundles/altClientes")
+    @Scripts.Render("~/bundles/urlBeneficiarioList");
+
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 @Html.Partial("Forms")

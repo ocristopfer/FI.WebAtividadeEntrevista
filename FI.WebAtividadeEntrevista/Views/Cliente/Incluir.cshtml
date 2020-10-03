@@ -5,8 +5,15 @@
 @section scripts{
     <script>
         var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
+        var urlBeneficiario = '@Url.Action("Index", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioList = '@Url.Action("BeneficiarioListSemPaginacao", "Beneficiario", new { area = "" })';
+        var listBeneficiarios = @Html.Raw(Json.Encode(new List<WebAtividadeEntrevista.Models.BeneficiarioModel>()));
+
     </script>
     @Scripts.Render("~/bundles/clientes")
+    @Scripts.Render("~/bundles/urlBeneficiarioList")
+
+
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 @Html.Partial("Forms")

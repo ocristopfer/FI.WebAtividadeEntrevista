@@ -29,7 +29,8 @@ $(document).ready(function () {
                     ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
             },
             success:
-            function (r) {
+                function (r) {
+                console.log(r)
                 ModalDialog("Sucesso!", r)
                 $("#formCadastro")[0].reset();
             }
@@ -39,7 +40,14 @@ $(document).ready(function () {
 })
 
 $("#beneficiarios").click(function () {
-    ModalDialog('Beneficiarios', 'data')
+    getBeneficiarios(urlBeneficiario, listBeneficiarios, null, ModalDialog);
+});
+
+$("#Beneficiario_Incluir").click(function () {
+    console.log('sera')
+    Aler('uhul')
+    //getBeneficiarios(urlBeneficiario, listBeneficiario, obj.Id, ModalDialog);
+
 });
 
 function ModalDialog(titulo, texto) {
@@ -65,3 +73,4 @@ function ModalDialog(titulo, texto) {
     $('body').append(texto);
     $('#' + random).modal('show');
 }
+
