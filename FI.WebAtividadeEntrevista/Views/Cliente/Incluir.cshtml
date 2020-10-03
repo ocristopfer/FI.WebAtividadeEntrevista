@@ -5,10 +5,15 @@
 @section scripts{
     <script>
         var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
+
         var urlBeneficiario = '@Url.Action("Index", "Beneficiario", new { area = "" })';
         var urlBeneficiarioList = '@Url.Action("BeneficiarioListSemPaginacao", "Beneficiario", new { area = "" })';
         var urlBeneficiarioValidarCFP = '@Url.Action("VerificarCPF", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioExcluir = '@Url.Action("Excluir", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioIncluir = '@Url.Action("Incluir", "Beneficiario", new { area = "" })';
+        var urlBeneficiarioValidar = '@Url.Action("Validar", "Beneficiario", new { area = "" })';
         var listBeneficiarios = @Html.Raw(Json.Encode(new List<WebAtividadeEntrevista.Models.BeneficiarioModel>()));
+
 
     </script>
 

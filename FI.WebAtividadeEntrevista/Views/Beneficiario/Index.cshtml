@@ -1,26 +1,15 @@
-﻿@model WebAtividadeEntrevista.Models.BeneficiarioModel
+﻿@model IEnumerable<WebAtividadeEntrevista.Models.BeneficiarioModel>
+
 @{
     Layout = null;
-    ViewBag.Title = "Beneficiarios";
-}
-@section scripts{
-    @Scripts.Render("~/bundles/urlBeneficiarioList");
+    ViewBag.Title = "Beneficiários";
 }
 
-<!--
-<div id="modalaaa" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Benefeciários</h4>
-            </div>
-            <div class="modal-body">-->
 <div class="row">
     <div class="col-md-5">
         <div class="form-group">
             <label for="Beneficiario_CPF">CPF:</label>
-            <input required="required" type="text" class="form-control" id="Beneficiario_CPF" name="Beneficiario_CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
+            <input required="required" type="text" class="form-control mascaraCPF" id="Beneficiario_CPF" name="Beneficiario_CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
         </div>
     </div>
     <div class="col-md-5">
@@ -31,35 +20,45 @@
     </div>
     <div class="col-md-2 justify-content-center">
         <div style="padding-top: 25px">
-            <button id="beneficiarioIncluir" type="button" class="btn btn-success" >Incluir</button>
+            <button id="beneficiarioIncluir" type="button" class="btn btn-success">Incluir</button>
         </div>
     </div>
 </div>
 <div class="row">
     <table id="gridBeneficiarios" class="table">
-        <thead>
-            <tr>
-                <th>CPF</th>
-                <th>Nome</th>
-                <th></th>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CPF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr id="beneficiario_@Html.DisplayFor(modelItem => item.Id)">
+                <td width="200" class="mascaraCPF">
+                    @Html.DisplayFor(modelItem => item.CPF)
+                </td>
+                <td width="200">
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+
+                <td>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioEditar">Editar</button>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioExcluir">Excluir</button>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th width="200">15089846707</th>
-                <th width="200">Fulano</th>
-                <th>
-                    <button href="#" role="button" type="button" id="beneficiarioIncluir" OnClick="incluirBeneficiario" class="btn btn-success align-middle">Editar</button>
-                    <button href="#" role="button" type="button" id="beneficiarioIncluir" OnClick="incluirBeneficiario" class="btn btn-success align-middle">Editar</button>
-                </th>
-            </tr>
-        <tbody>
+        }
+
     </table>
 </div>
-<!--           </div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-</div>
-        </div>
-    </div>
-</div>-->
+
+<script>
+        listBeneficiarios = @Html.Raw(Json.Encode(Model))
+        console.log('lista', listBeneficiarios)
+</script>
+

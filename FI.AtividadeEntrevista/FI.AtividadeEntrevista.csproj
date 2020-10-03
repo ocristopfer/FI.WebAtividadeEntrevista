@@ -95,5 +95,8 @@
   <ItemGroup>
     <EmbeddedResource Include="DAL\Beneficiarios\Procedures\FI_SP_IncBenef.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DAL\Beneficiarios\Procedures\FI_SP_DelBenef.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

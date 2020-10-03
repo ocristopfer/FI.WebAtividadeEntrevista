@@ -3,6 +3,8 @@ $(document).ready(function () {
     $("#formCadastro #CPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
     $("#formCadastro #CEP").inputmask("mask", { "mask": "99999-999" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
     $("#formCadastro #Telefone").inputmask("mask", { "mask": "(99) 9999-99999" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
+    $("#Beneficiario_CPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
+    var idCliente = obj.Id;
 
     if (obj) {
         $('#formCadastro #Nome').val(obj.Nome);
@@ -25,15 +27,15 @@ $(document).ready(function () {
             method: "POST",
             data: {
                 "NOME": $(this).find("#Nome").val(),
-                "CEP": $(this).find("#CEP").inputmask("remove").val(),
+                "CEP": $(this).find("#CEP").inputmask("unmaskedvalue"),
                 "Email": $(this).find("#Email").val(),
                 "Sobrenome": $(this).find("#Sobrenome").val(),
                 "Nacionalidade": $(this).find("#Nacionalidade").val(),
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").inputmask("remove").val(),
-                "CPF": $(this).find("#CPF").inputmask("remove").val()
+                "Telefone": $(this).find("#Telefone").inputmask("unmaskedvalue"),
+                "CPF": $(this).find("#CPF").inputmask("unmaskedvalue")
             },
             error:
                 function (r) {
@@ -44,15 +46,13 @@ $(document).ready(function () {
                 },
             success:
                 function (r) {
-                    console.log(r)
-                    ModalDialog("Sucesso!", r, null ,reset);
-                 
-
-                }
+                    salvarBeneficario(listBeneficiarios, ModalDialog("Sucesso!", r, null, reset));
+                 }
         });
     })
 
 })
+
 
 function reset() {
     $("#formCadastro")[0].reset();

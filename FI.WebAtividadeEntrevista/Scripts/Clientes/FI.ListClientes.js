@@ -23,9 +23,15 @@ $(document).ready(function () {
                 Alterar: {
                     title: '',
                     display: function (data) {
-                        return '<button onclick="window.location.href=\'' + urlAlteracao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button>';
+                        return '<center><button onclick="window.location.href=\'' + urlAlteracao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button></center>';
                     }
-                }
+                }/*,
+                Excluir: {
+                    title: '',
+                    display: function (data) {
+                        return '<button onclick="window.location.href=\'' + urlExclusao + '/' + data.record.Id + '\'" class="btn btn-danger btn-sm">Excluir</button>';
+                    }
+                }*/
             }
         });
 

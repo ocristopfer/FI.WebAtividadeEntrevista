@@ -11,15 +11,15 @@ $(document).ready(function () {
             method: "POST",
             data: {
                 "NOME": $(this).find("#Nome").val(),
-                "CEP": $(this).find("#CEP").inputmask("remove").val(),
+                "CEP": $(this).find("#CEP").inputmask("unmaskedvalue"),
                 "Email": $(this).find("#Email").val(),
                 "Sobrenome": $(this).find("#Sobrenome").val(),
                 "Nacionalidade": $(this).find("#Nacionalidade").val(),
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").inputmask("remove").val(),
-                "CPF": $(this).find("#CPF").inputmask("remove").val()
+                "Telefone": $(this).find("#Telefone").inputmask("unmaskedvalue"),
+                "CPF": $(this).find("#CPF").inputmask("unmaskedvalue")
             },
             error:
             function (r) {
@@ -30,13 +30,16 @@ $(document).ready(function () {
             },
             success:
                 function (r) {
-                    ModalDialog("Sucesso!", r, null , $("#formCadastro")[0].reset());
-              
+                    salvarBeneficario(listBeneficiarios, callbackSucesso(r));  
             }
         });
     })
     
 })
+
+function callbackSucesso(r) {
+    ModalDialog("Sucesso!", r, null, $("#formCadastro")[0].reset());
+}
 
 function prencherEndereco(dados_cep) {
     if (dados_cep) {
@@ -48,6 +51,6 @@ function prencherEndereco(dados_cep) {
 }
 
 $("#beneficiarios").click(function () {
-    getBeneficiariosModal(urlBeneficiario, listBeneficiarios, null, ModalDialog);
+    getBeneficiariosModal(urlBeneficiario, listBeneficiarios, 0, ModalDialog);
 });
 

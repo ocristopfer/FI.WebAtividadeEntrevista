@@ -11,10 +11,31 @@ namespace WebAtividadeEntrevista.Controllers
 {
     public class BeneficiarioController : Controller
     {
+        
 
-        public ActionResult Index()
+        public ActionResult Index(long idCliente)
         {
-            return View();
+            List<BeneficiarioModel> listBeneficiario = new List<BeneficiarioModel>();
+            if (idCliente != 0)
+            {
+                BoBeneficiario bo = new BoBeneficiario();
+                int qtd = 0;
+                List<Beneficiario> beneficiarios = bo.Pesquisa(idCliente, 0, 0, "Nome", true, out qtd);
+
+                foreach (var item in beneficiarios)
+                {
+                    var model = new BeneficiarioModel();
+                    model.Id = item.Id;
+                    model.Nome = item.Nome;
+                    model.CPF = item.CPF;
+                    model.idCliente = item.idCliente;
+                    listBeneficiario.Add(model);
+
+                }
+
+            }
+
+            return View(listBeneficiario);
         }
         
      
@@ -23,8 +44,9 @@ namespace WebAtividadeEntrevista.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public JsonResult Incluir(Beneficiario model)
+        public ActionResult Incluir(BeneficiarioModel model)
         {
             BoBeneficiario bo = new BoBeneficiario();
 
@@ -46,16 +68,44 @@ namespace WebAtividadeEntrevista.Controllers
                 }
                 else
                 {
-
+                    
                     model.Id = bo.Incluir(new Beneficiario()
                     {      
                         Nome = model.Nome,
                         CPF = model.CPF,
                         idCliente = model.idCliente
-                    }); ;
+                    }); 
 
 
                     return Json("Cadastro efetuado com sucesso");
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Validar(BeneficiarioModel model)
+        {
+            BoBeneficiario bo = new BoBeneficiario();
+
+            if (!this.ModelState.IsValid)
+            {
+                List<string> erros = (from item in ModelState.Values
+                                      from error in item.Errors
+                                      select error.ErrorMessage).ToList();
+
+                Response.StatusCode = 400;
+                return Json(string.Join(Environment.NewLine, erros));
+            }
+            else
+            {
+                if (bo.VerificarExistencia(model.CPF))
+                {
+                    Response.StatusCode = 400;
+                    return Json(string.Join(Environment.NewLine, "CPF já cadastrado na base de dados!"));
+                }
+                else
+                {
+                    return Json("true");
                 }
             }
         }
@@ -114,6 +164,22 @@ namespace WebAtividadeEntrevista.Controllers
         }
 
         [HttpPost]
+        public JsonResult Excluir(long id)
+        {
+            try {
+                BoBeneficiario bo = new BoBeneficiario();
+                bo.Excluir(id);
+                return Json("true");
+            }
+            catch(Exception ex)
+            {
+                return Json("false");
+            }
+            
+           
+        }
+
+        [HttpPost]
         public JsonResult BeneficiarioListSemPaginacao(long idCliente)
         {
             try
@@ -146,10 +212,10 @@ namespace WebAtividadeEntrevista.Controllers
                 if (array.Length > 1)
                     crescente = array[1];
 
-                List<Beneficiario> clientes = new BoBeneficiario().Pesquisa(idCliente, jtStartIndex, jtPageSize, campo, crescente.Equals("ASC", StringComparison.InvariantCultureIgnoreCase), out qtd);
+                List<Beneficiario> beneficiarios = new BoBeneficiario().Pesquisa(idCliente, jtStartIndex, jtPageSize, campo, crescente.Equals("ASC", StringComparison.InvariantCultureIgnoreCase), out qtd);
 
                 //Return result to jTable
-                return Json(new { Result = "OK", Records = clientes, TotalRecordCount = qtd });
+                return Json(new { Result = "OK", Records = beneficiarios, TotalRecordCount = qtd });
             }
             catch (Exception ex)
             {

@@ -25,15 +25,13 @@
     $('body').append(texto);
     $('#' + random).modal('show');
 
-    if (startFunction) {
+    if (startFunction != null) {
         $('#' + random).on('shown.bs.modal', function (e) {
             startFunction();
         })
     }
 
-  
-
-    if (closeFunction) {
+    if (closeFunction != null) {
         $('#' + random).on('hidden.bs.modal', function () {
             closeFunction();
         });

@@ -122,7 +122,7 @@ namespace FI.AtividadeEntrevista.DAL
 
             parametros.Add(new System.Data.SqlClient.SqlParameter("Id", Id));
 
-            base.Executar("FI_SP_DelBeneficiario", parametros);
+            base.Executar("FI_SP_DelBenef", parametros);
         }
 
         private List<DML.Beneficiario> Converter(DataSet ds)
