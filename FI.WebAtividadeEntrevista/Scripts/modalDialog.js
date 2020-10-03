@@ -23,7 +23,7 @@
         '</div> <!-- /.modal -->                                                                                            ';
 
     $('body').append(texto);
-    $('#' + random).modal('show');
+    $('#' + random).modal({ backdrop: 'static', keyboard: false });
 
     if (startFunction != null) {
         $('#' + random).on('shown.bs.modal', function (e) {

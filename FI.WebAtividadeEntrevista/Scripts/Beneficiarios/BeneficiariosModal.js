@@ -58,7 +58,6 @@ $("body").on("click", ".beneficiarioExcluir", function () {
 
 
     } else {
-        console.log($(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''));
         listBeneficiarios = listBeneficiarios.filter(item => item.CPF !== $(this).closest('tr').children('td:eq(0)').text().replace(/\D/g, ''))
         $(this).closest("tr").remove();
     }
@@ -71,19 +70,17 @@ var cpf;
 var nome;
 
 $("body").on("click", ".beneficiarioSalvar", function () {
+    elementoHtml = $(this).closest('tr');
     var find = listBeneficiarios.find(x => x.CPF === cpf)
-    if (find & find.Id != id) {
+    if (find != undefined && find.Id != id) {
         ModalDialog("Ocorreu um erro", "Beneficiário detentor do CPF: " + cpf + " já existe na lista.");
         return;
     }
 
-    cpf = $('#edicaoCPF').val();
+    cpf = $('#edicaoCPF').inputmask("unmaskedvalue");
     nome = $('#edicaoNome').val();
 
-    $(this).closest('tr').children('td:eq(1)').html()
-    $(this).closest('tr').children('td:eq(2)').html()
-    $(this).closest('tr').children('td:eq(1)').text(cpf)
-    $(this).closest('tr').children('td:eq(2)').text(nome)
+    alterarRow(elementoHtml, false);
 
     listBeneficiarios.forEach(element => {
         if (element.Id === parseInt(id)) {
@@ -91,34 +88,37 @@ $("body").on("click", ".beneficiarioSalvar", function () {
             element.Nome = nome;
         }
     });
-
-    
-    id = null;
-    cpf = null;
-    nome = null;
-
-    elementoHtml.children('td:eq(3)').children('.beneficiarioSalvar').hide();
-    elementoHtml.children('td:eq(3)').children('.beneficiarioEditar').show();
     
 });
 
 
 $("body").on("click", ".beneficiarioEditar", function () {
     elementoHtml = $(this).closest('tr');
-    
-    $(this).closest('tr').children('td:eq(3)').children('.beneficiarioEditar').hide()
-    $(this).closest('tr').children('td:eq(3)').children('.beneficiarioSalvar').show()
-     id = $(this).closest('tr').children('td:eq(0)');
-     cpf = $(this).closest('tr').children('td:eq(1)').text().replace(/\D/g, '').trim();
-     nome = $(this).closest('tr').children('td:eq(2)').text().trim();
+    alterarRow(elementoHtml, true);
 
-    $(this).closest('tr').children('td:eq(1)').html('<input id="edicaoCPF" type="text" class="form-control" value="' + cpf + '" maxlength="14"> </input>')
-    $(this).closest('tr').children('td:eq(2)').html('<input id="edicaoNome" type="text" class="form-control" value="' + nome + '" maxlength="50"> </input>')
-    $("#modalBeneficiarios #edicaoCPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
-  /*  $('.beneficiarioEditar').hide();
-    $('.beneficiarioSalvar').show();
-    */
 });
+
+function alterarRow(elementoHtml, modoEdicao = false) {
+    if (modoEdicao) {
+        elementoHtml.children('td:eq(3)').children('.beneficiarioEditar').hide()
+        elementoHtml.children('td:eq(3)').children('.beneficiarioSalvar').show()
+
+        id = elementoHtml.children('td:eq(0)').text().trim();
+        cpf = elementoHtml.children('td:eq(1)').text().replace(/\D/g, '').trim();
+        nome = elementoHtml.children('td:eq(2)').text().trim();
+
+        elementoHtml.children('td:eq(1)').html('<input id="edicaoCPF" type="text" class="form-control" value="' + cpf + '" maxlength="14"> </input>')
+        elementoHtml.children('td:eq(2)').html('<input id="edicaoNome" type="text" class="form-control" value="' + nome + '" maxlength="50"> </input>')
+        $("#modalBeneficiarios #edicaoCPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
+    } else {
+        elementoHtml.children('td:eq(1)').html()
+        elementoHtml.children('td:eq(2)').html()
+        elementoHtml.children('td:eq(1)').text($('#edicaoCPF').val())
+        elementoHtml.children('td:eq(2)').text($('#edicaoNome').val())
+        elementoHtml.children('td:eq(3)').children('.beneficiarioSalvar').hide();
+        elementoHtml.children('td:eq(3)').children('.beneficiarioEditar').show();
+    }
+}
 
 
 
@@ -152,19 +152,22 @@ function salvarBeneficario(lista, callbackFuction, callBackParametro) {
                 },
             success:
                 function (r) {
-                    if (callbackFuction) {
-                        callbackFuction(callBackParametro);
-                    }
+               
                 }
         });
 
 
     });
+
+    if (callbackFuction) {
+        callbackFuction(callBackParametro);
+    }
 }
 
 function adicionarALista(beneficiario) {
-
+    
     var texto = '<tr id="beneficiario_' + beneficiario.Id + '">                                         ' +
+        '<td style="display:none" value="' + beneficiario.Id + '">' + beneficiario.Id + '</td> ' +
         '<td width="200" class="mascaraCPF">' + $('#Beneficiario_CPF').val() + '</td >                  ' +
         '<td width="200">' + beneficiario.Nome + '</td >                                                ' +
         '<td>                                                                                           ' +
@@ -203,7 +206,7 @@ function getBeneficiariosModal(urlBeneficiario, listBeneficiarios, idCliente, Mo
 
 function closeModalFunction() {
     if (elementoHtml != null) {
-
+        alterarRow(elementoHtml)
     }
 }
 
