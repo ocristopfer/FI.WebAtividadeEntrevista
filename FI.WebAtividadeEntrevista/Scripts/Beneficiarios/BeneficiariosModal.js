@@ -88,7 +88,7 @@ $("body").on("click", ".beneficiarioSalvar", function () {
             element.Nome = nome;
         }
     });
-    
+
 });
 
 
@@ -123,9 +123,9 @@ function alterarRow(elementoHtml, modoEdicao = false) {
 
 
 function salvarBeneficario(lista, callbackFuction, callBackParametro) {
-    var url;
-    lista.forEach(element => {
-
+    if (lista.length > 0) {
+        var url;
+        var element = lista[0];
         if (element.Id == null) {
             element.Id = 0;
             url = urlBeneficiarioIncluir;
@@ -152,20 +152,24 @@ function salvarBeneficario(lista, callbackFuction, callBackParametro) {
                 },
             success:
                 function (r) {
-               
+                    if (lista.length > 0) {
+                        lista.shift()
+                        salvarBeneficario(lista, callbackFuction, callBackParametro)
+                    } 
                 }
         });
-
-
-    });
-
-    if (callbackFuction) {
-        callbackFuction(callBackParametro);
+    } else {
+        if (callbackFuction) {
+            callbackFuction(callBackParametro);
+        }
     }
+
+
+
 }
 
 function adicionarALista(beneficiario) {
-    
+
     var texto = '<tr id="beneficiario_' + beneficiario.Id + '">                                         ' +
         '<td style="display:none" value="' + beneficiario.Id + '">' + beneficiario.Id + '</td> ' +
         '<td width="200" class="mascaraCPF">' + $('#Beneficiario_CPF').val() + '</td >                  ' +

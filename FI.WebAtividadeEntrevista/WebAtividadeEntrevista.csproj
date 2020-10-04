@@ -448,7 +448,6 @@
     <Content Include="Views\Cliente\Alterar.cshtml" />
     <Content Include="Views\Cliente\Forms.cshtml" />
     <Content Include="Views\Beneficiario\Index.cshtml" />
-    <Content Include="Views\Beneficiario\Lista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FI.AtividadeEntrevista\FI.AtividadeEntrevista.csproj">

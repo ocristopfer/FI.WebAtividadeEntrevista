@@ -46,13 +46,16 @@ $(document).ready(function () {
                 },
             success:
                 function (r) {
-                    salvarBeneficario(listBeneficiarios, ModalDialog("Sucesso!", r, null, reset));
+                    salvarBeneficario(listBeneficiarios, salvarBeneCallBack , r);
                  }
         });
     })
 
 })
 
+function salvarBeneCallBack(r) {
+    ModalDialog("Sucesso!", r, null, reset)
+}
 
 function reset() {
     $("#formCadastro")[0].reset();

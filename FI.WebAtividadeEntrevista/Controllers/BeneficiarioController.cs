@@ -111,7 +111,7 @@ namespace WebAtividadeEntrevista.Controllers
         }
 
         [HttpPost]
-        public JsonResult Alterar(Beneficiario model)
+        public JsonResult Alterar(BeneficiarioModel model)
         {
             BoBeneficiario bo = new BoBeneficiario();
 
