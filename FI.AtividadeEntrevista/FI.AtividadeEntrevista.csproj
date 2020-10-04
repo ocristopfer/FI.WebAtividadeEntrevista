@@ -98,5 +98,12 @@
   <ItemGroup>
     <EmbeddedResource Include="DAL\Beneficiarios\Procedures\FI_SP_DelBenef.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DAL\Beneficiarios\CREATE TABLE BENEFICIARIOS.sql" />
+    <Content Include="DAL\Beneficiarios\Procedures\FI_SP_PesqBeneficiario.sql" />
+    <Content Include="DAL\Beneficiarios\Procedures\FI_SP_VerificaBeneficiario.sql" />
+    <Content Include="DAL\Clientes\CREATE TABLE CLIENTES.sql" />
+    <Content Include="DAL\Clientes\Procedures\FI_SP_VerificaCliente.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
