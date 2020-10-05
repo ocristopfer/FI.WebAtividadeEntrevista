@@ -5,6 +5,7 @@
     ViewBag.Title = "Beneficiários";
 }
 
+<h6 class="text-warning">Todas as alterações de beneficiários só serão processadas após salvar o cliente. </h6>
 <div class="row">
     <div class="col-md-5">
         <div class="form-group">
@@ -53,7 +54,8 @@
                 <td>
                     <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioEditar">Editar</button>
                     <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioSalvar" style="display:none">Salvar</button>
-                    <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary beneficiarioExcluir">Excluir</button>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-danger beneficiarioExcluir">Excluir</button>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.Id)" class="btn btn-danger beneficiarioCancelar" style="display:none">Cancelar</button>
                 </td>
             </tr>
         }
@@ -62,7 +64,8 @@
 </div>
 
 <script>
-        listBeneficiarios = @Html.Raw(Json.Encode(Model))
+    listBeneficiarios = @Html.Raw(Json.Encode(Model))
+        $("#Beneficiario_CPF").inputmask("mask", { "mask": "999.999.999-99" }, { 'autoUnmask': true, 'removeMaskOnSubmit': true });
         console.log('lista', listBeneficiarios)
 </script>
 

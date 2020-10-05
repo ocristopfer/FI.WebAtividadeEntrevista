@@ -255,7 +255,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\Beneficiarios\FI.ListBeneficiarios.js" />
+    <Content Include="Scripts\Clientes\CarregarMascaras.js" />
     <Content Include="Scripts\Clientes\CarregarEstados.js" />
     <Content Include="Scripts\Plugins\BuscarCep.js" />
     <Content Include="Scripts\modalDialog.js" />

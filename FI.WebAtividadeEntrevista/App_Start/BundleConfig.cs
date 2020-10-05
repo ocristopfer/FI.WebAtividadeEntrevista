@@ -35,6 +35,7 @@ namespace WebAtividadeEntrevista
 
             bundles.Add(new ScriptBundle("~/bundles/clientes").Include(
                         "~/Scripts/Clientes/CarregarEstados.js",
+                        "~/Scripts/Clientes/CarregarMascaras.js",
                         "~/Scripts/Clientes/FI.Clientes.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/listClientes").Include(
@@ -42,6 +43,7 @@ namespace WebAtividadeEntrevista
 
             bundles.Add(new ScriptBundle("~/bundles/altClientes").Include(
                         "~/Scripts/Clientes/CarregarEstados.js",
+                        "~/Scripts/Clientes/CarregarMascaras.js",
                         "~/Scripts/Clientes/FI.AltClientes.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/pluginsExtras").Include(

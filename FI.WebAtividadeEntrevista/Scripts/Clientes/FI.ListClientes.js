@@ -25,7 +25,7 @@ $(document).ready(function () {
                     display: function (data) {
                         return '<center><button onclick="window.location.href=\'' + urlAlteracao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button></center>';
                     }
-                }/*,
+                },/*
                 Excluir: {
                     title: '',
                     display: function (data) {
